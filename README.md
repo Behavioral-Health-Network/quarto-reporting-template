@@ -30,7 +30,7 @@ reporting-template/
   index.qmd
   README.md
   styles/
-    report.scss
+    report-html.scss
     fontawesome/
       css/
       webfonts/
