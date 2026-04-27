@@ -91,6 +91,17 @@ _bookdown_files
 *.png
 *.jpg
 *.html
+*.tex
+
+# Quarto intermediate files
+*.html.md
+*.pdf.md
+*.qmd.json
+*.upa
+*.upb
+
+# Quarto freeze artifacts (if freeze is used)
+_freeze/
 
 /.quarto/
 **/*.quarto_ipynb
