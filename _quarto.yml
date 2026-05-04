@@ -1,9 +1,6 @@
 project:
   title: "Quarto Reporting Template"
   type: default
-  output-dir: _output
-  render:
-    clean: true
   resources:
     - styles/
     - assets/
@@ -18,7 +15,6 @@ format:
     page-layout: full
     smooth-scroll: true
     embed-resources: true
-    pdf-engine: chromium
 
   pdf:
     documentclass: article
