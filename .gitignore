@@ -88,10 +88,17 @@ _bookdown_files
 *.xls
 *.csv
 *.ppt
-*.png
 *.jpg
-*.html
 *.tex
+
+# Ignore HTML files anywhere except _output/html/, which is where the rendered
+# HTML output should be saved.
+*.html
+!_output/html/*.html
+
+# Ignore PNGs anywhere except images/
+*.png
+!images/*.png
 
 # Quarto intermediate files
 *.html.md
