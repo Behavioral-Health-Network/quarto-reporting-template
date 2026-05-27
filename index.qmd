@@ -2,11 +2,12 @@
 title: "<program> <period> <report-type>"
 ---
 
-# ```{r}
-#| label: load-<program>-data
-
-# Set default fallback parameters for running code interactively during
-# development since Quarto params are only passed when rendering the document
+```{r}
+# #| label: load-<program>-data
+# 
+# # Set default fallback parameters for running code interactively during
+# # development since Quarto params are only passed when rendering the document
+# 
 # if (
 #   !exists(
 #     "params"
@@ -18,31 +19,31 @@ title: "<program> <period> <report-type>"
 #     period = "quarter"
 #   )
 # }
-
-# Load ETL output
+# 
+# # Load ETL output
 # source(
 #   "R/load_data.R"
 # )
-
-# Run the function to load <program> data
+# 
+# # Run the function to load <program> data
 # <program>_data <- load_<program>_data()
-# ---
+```
 
-# ```{r}
-#| label: filter-<program>-data
-
+```{r}
+# #| label: filter-<program>-data
+# 
 # period <- reporting_period(
 #   date = params$report_date,
 #   system = params$fiscal_system,
 #   period = "quarter"
 # )
-
+# 
 # start_date <- period$start
 # end_date <- period$end
-
+# 
 # <program>_full_data <- <program>_data$<program>_full_data |>
 #  dplyr::filter(
 #    enrollment_starting_date >= start_date,
 #    enrollment_starting_date <= end_date
 #  )
-# ```
+```
