@@ -39,6 +39,7 @@ data_intermediate/*
 .Ruserdata
 .Rproj.user/
 .Renviron
+*.rds
 
 # R CMD build/check outputs
 /*.tar.gz
