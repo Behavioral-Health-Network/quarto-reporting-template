@@ -1,25 +1,73 @@
-# Placeholder function for loading program data.
-# Replace <program> with your program name and update the logic
-# to source and run your program's ETL pipeline.
+# Placeholder function for loading program data. Replace <program> with your
+# program name and update the logic to call targets::tar_read(<program>_etl) to
+# execute the ETL pipeline in `famcare-etl-goverened` and read data for the
+# selected program along cartography data. Optionally, read additional data
+# bundles as relevant. Refer to `_targets.R` in the `famcare-etl-governed` repo
+# for available data bundles.
 
-load_<program>_data <- function() {
-  # Example pattern for real projects:
-  #
-  # etl_dir <- Sys.getenv("FAMCARE_ETL_GOVERNED")
-  #
-  # if (etl_dir == "") {
-  #   stop("Environment variable for ETL directory is not set.")
-  # }
-  #
-  # etl_env <- new.env(parent = globalenv())
-  # etl_env$etl_dir <- etl_dir
-  #
-  # sys.source(file.path(etl_dir, "etl", "setup.R"), envir = etl_env)
-  # sys.source(file.path(etl_dir, "etl", "<program>.R"), envir = etl_env)
-  #
-  # data <- etl_env$run_<program>_etl(etl_env$<program>_paths)
-  # return(data)
-  #
-  # For the template, return an empty list so the project renders.
-  list()
-}
+# load_<program>_data <- function(
+# ) {
+#   etl_dir <- Sys.getenv(
+#     "FAMCARE_ETL_GOVERNED"
+#   )
+  
+#   if (
+#     etl_dir == ""
+#   ) {
+#     stop(
+#       "Environment variable FAMCARE_ETL_GOVERNED is not set.",
+#       "Please define it in your .Renviron."
+#     )
+#   }
+  
+#   # Load ETL helper environment (build subsets, fiscal date functions,
+#   #   cartography files, etc.)
+#   source(
+#     file.path(
+#       etl_dir,
+#       "etl/setup.R"
+#     ),
+#     local = environment()
+#   )
+  
+#   store_path <- file.path(
+#     etl_dir,
+#     "_targets"
+#     )
+  
+#   # Run tar_make() inside the ETL repo directory
+#   old_dir <- getwd()
+#   on.exit(
+#     setwd(
+#       old_dir
+#       ),
+#     add = TRUE
+#     )
+  
+#   setwd(
+#     etl_dir
+#     )
+  
+#   # Ensure ETL is up to date
+#   targets::tar_make(
+#     store = store_path
+#     )
+  
+#   # Read the ETL outputs for BCR
+#   <program>_data <- targets::tar_read(
+#     <program>_etl,
+#     store = store_path
+#     )
+  
+#   cartography_data <- targets::tar_read(
+#     cartography_bundle,
+#     store = store_path
+#     )
+
+#   return(
+#     list(
+#       <program>_data = <program>_data,
+#       cartography_data = cartography_data
+#     )
+#     )
+# }
