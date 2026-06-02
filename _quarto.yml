@@ -18,6 +18,7 @@ format:
     page-layout: full
     smooth-scroll: true
     embed-resources: true
+    html-table-processing: none
 
   pdf:
     pdf-engine: pagedjs-cli
