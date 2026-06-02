@@ -2,7 +2,7 @@
 
 This repository provides a starter Quarto project for building program reports. It includes recommended structure, layout patterns, styling conventions, and reusable components that support both narrative reports and data‑driven briefs.
 
-The template is designed to be program‑agnostic. Users can adapt it to any reporting workflow, including those that load cleaned data from program ETL pipelines.
+The template is designed to be program‑agnostic. Users can adapt it to any reporting workflow, including those that load cleaned data from the ETL pipeline.
 
 ---
 
@@ -24,7 +24,7 @@ The template renders successfully without any external data. Analysts can plug i
 
 ## Folder Structure
 
-```
+```{md}
 reporting-template/
   _quarto.yml
   index.qmd
@@ -60,7 +60,12 @@ reporting-template/
 
 ## ETL Integration
 
-This template includes placeholders for connecting to program ETL pipelines.  
+This template includes placeholders for connecting to the ETL pipeline. The
+intention is to allow {targets} to execute the ETL pipeline in
+`famcare-etl-governed`, so the goal is to read the relevant program-specific.
+target. One should also read targets for additional data bundles as needed. This
+includes but is not necessarily limited to the cartography bundle.
+
 A typical pattern might look like:
 
 ```{r}
@@ -74,9 +79,9 @@ A typical pattern might look like:
 #   )
 # ) {
 #   params <- list(
-#     report_date = "2026-01-01",
-#     fiscal_system = "state",
-#     period = "quarter"
+#     start_date = "2026-01-01",
+#     end_date = "2026-03-31"
+#     fiscal_system = "state"
 #   )
 # }
 
@@ -87,28 +92,69 @@ A typical pattern might look like:
 
 # Run the function to load <program> data
 # <program>_data <- load_epicc_data()
-```
-
-```{r}
-#| label: filter-<program>-data
-
-# period <- reporting_period(
-#   date = params$report_date,
-#   system = params$fiscal_system,
-#   period = "quarter"
+# Build subsets
+# <program>_subsets <- build_subsets(
+#  full_data = <program>_data$<program>_full_data,
+#  start_date = params$start_date,
+#  end_date   = params$end_date,
+#  fiscal_system = params$fiscal_system
 # )
-
-# start_date <- period$start
-# end_date <- period$end
-
-# <program>c_full_data <- epicc_data$<program>_full_data |>
-#  dplyr::filter(
-#    enrollment_starting_date >= start_date,
-#    enrollment_starting_date <= end_date
-#  )
+#
+# <program>_initiated  <- <program>_subsets$initiated_within_period
+# <program>_dismissed  <- <program>_subsets$dismissed_within_period
 ```
 
 These examples are commented out so the template renders without dependencies.
+
+---
+
+## Using Rendering Profiles in This Quarto Project
+
+This project supports **two different rendering modes**, depending on the type of report you are producing:
+
+- **Infographic‑style briefs** (HTML → PDF using pagedjs-cli)
+- **Narrative LaTeX reports** (PDF via LaTeX engine)
+
+These modes are implemented using **Quarto profiles**, allowing both formats to coexist cleanly in the same repository without duplicating configuration.
+
+---
+
+### Default Profile - Infographic Briefs (HTML + pagedjs-cli PDF)
+
+The **default** rendering mode is optimized for *infographic briefs* and other layout‑heavy reports that rely on:
+
+- SCSS theming  
+- FontAwesome icons  
+- HTML/CSS layout  
+- Full‑page designs  
+- Web fonts  
+- Paged media CSS  
+
+This profile uses **pagedjs-cli** to generate PDFs from HTML.
+
+#### Render to HTML (Default)
+
+```{md}
+quarto render index.qmd
+```
+
+### LaTeX Profile - Narrative Reports (Annual Reports, Long-Form Text)
+
+The `latex` profile is designed for **narrative, text‑heavy reports** that require:
+
+- LaTeX typography  
+- Traditional pagination  
+- Section numbering  
+- Academic‑style layout  
+- Custom LaTeX preambles
+
+This profile uses a LaTeX engine (e.g., `xelatex`) instead of `pagedjs`.
+
+#### Render to PDF (LaTeX Profile)
+
+```{md}
+quarto render index.qmd --profile latex
+```
 
 ---
 
