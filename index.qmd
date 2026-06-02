@@ -2,48 +2,46 @@
 title: "<program> <period> <report-type>"
 ---
 
-```{r}
+# ```{r}
 # #| label: load-<program>-data
-# 
-# # Set default fallback parameters for running code interactively during
-# # development since Quarto params are only passed when rendering the document
-# 
+
+# Set default fallback parameters for running code interactively during
+# development since Quarto params are only passed when rendering the document
 # if (
 #   !exists(
 #     "params"
 #   )
 # ) {
 #   params <- list(
-#     report_date = "2026-01-01",
-#     fiscal_system = "state",
-#     period = "quarter"
+#     start_date = "2026-01-01",
+#     end_date = "2026-03-31",
+#     fiscal_system = "state"
 #   )
 # }
-# 
-# # Load ETL output
+#
+# params$start_date <- lubridate::ymd(
+#  params$start_date
+#  )
+# params$end_date <- lubridate::ymd(
+#  params$end_date
+#  )
+#
+# Load ETL output
 # source(
 #   "R/load_data.R"
 # )
-# 
-# # Run the function to load <program> data
+#
+# Run the function to load <program> data
 # <program>_data <- load_<program>_data()
-```
-
-```{r}
-# #| label: filter-<program>-data
-# 
-# period <- reporting_period(
-#   date = params$report_date,
-#   system = params$fiscal_system,
-#   period = "quarter"
+#
+# Build subsets
+# <program>_subsets <- build_subsets(
+#  full_data = <program>_data$<program>_full_data,
+#  start_date = params$start_date,
+#  end_date   = params$end_date,
+#  fiscal_system = params$fiscal_system
 # )
-# 
-# start_date <- period$start
-# end_date <- period$end
-# 
-# <program>_full_data <- <program>_data$<program>_full_data |>
-#  dplyr::filter(
-#    enrollment_starting_date >= start_date,
-#    enrollment_starting_date <= end_date
-#  )
-```
+#
+# <program>_initiated  <- <program>_subsets$initiated_within_period
+# <program>_dismissed  <- <program>_subsets$dismissed_within_period
+# ```
