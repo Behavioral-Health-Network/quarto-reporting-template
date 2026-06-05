@@ -36,7 +36,7 @@ title: "<program> <period> <report-type>"
 #
 # Build subsets
 # <program>_subsets <- build_subsets(
-#  full_data = <program>_data$<program>_full_data,
+#  full_data = <program>_data$<program>_data$<program>_full_data,
 #  start_date = params$start_date,
 #  end_date   = params$end_date,
 #  fiscal_system = params$fiscal_system
